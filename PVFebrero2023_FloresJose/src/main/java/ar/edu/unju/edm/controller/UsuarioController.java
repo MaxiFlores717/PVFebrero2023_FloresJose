@@ -1,8 +1,16 @@
 package ar.edu.unju.edm.controller;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +27,29 @@ import ar.edu.unju.edm.service.IUsuarioService;
 @Controller
 public class UsuarioController {
 
+	
+	protected final Log logger = LogFactory.getLog(this.getClass());
+	
 	@Autowired
 	private IUsuarioService usuarioService;
 
 	@RequestMapping(value = { "/listar", "/" }, method = RequestMethod.GET)
-	public String listar(Model model) {
+	public String listar(Model model, Authentication authentication) {
+		
+		if(authentication != null) {
+			logger.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+		}
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		if(hasRole("DOCENTE")) {
+			logger.info("Hola ".concat(auth.getName()).concat(" tienes acceso!"));
+		}
+		else {
+			logger.info("Hola ".concat(auth.getName()).concat(" NO tienes acceso!"));
+		}
+		
+		
 		model.addAttribute("titulo", "Listado de usuarios");
 		model.addAttribute("usuarios", usuarioService.findAll());
 		return "listar";
@@ -67,4 +93,31 @@ public class UsuarioController {
 		return "redirect:/listar";
 	}
 
+	
+	public boolean hasRole(String role) {
+		
+		SecurityContext context = SecurityContextHolder.getContext();
+		
+		if(context == null) {
+			return false;
+		}
+		
+		Authentication auth = context.getAuthentication();
+		
+		if(auth == null) {
+			
+			return false;
+		}
+		
+		Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+		
+		for(GrantedAuthority authority: authorities) {
+			if(role.equals(authority.getAuthority())) {
+				logger.info("Hola usuario ".concat(auth.getName()).concat(" tu rol es: ".concat(authority.getAuthority())));
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

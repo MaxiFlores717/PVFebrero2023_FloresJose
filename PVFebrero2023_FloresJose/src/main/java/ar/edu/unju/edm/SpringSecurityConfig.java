@@ -11,41 +11,55 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import ar.edu.unju.edm.service.LoginUsuarioServiceIMP;
+
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	
+	@Autowired
+	private LoginSuccesHandler successHandler;
 	
+	
+//	fijarse para q ande el boton desplegable
+//	String[] resources = new String[] { "/include/**", "/css/**", "/icons/**", "/img/**", "/js/**", "/layer/**",
+//	"/webjars/**" };
+//	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/", "/listar", "/images/**").permitAll()
-		.antMatchers("/eliminar/**").hasAnyRole("USER")
-		.antMatchers("/form/**").hasAnyRole("ADMIN")
+		http.authorizeRequests().antMatchers("/", "/listar", "/images/**", "/css/**", "/js/**", "/form/**").permitAll()
+		.antMatchers("/eliminar/**").hasAnyRole("DOCENTE")
+//		.antMatchers("/form/**").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
-		.formLogin().loginPage("/login")
+		.formLogin()
+			.successHandler(successHandler)
+			.loginPage("/login")
+			.usernameParameter("dni")
+			.passwordParameter("password")
+			.permitAll()
+		.and()
+		.logout()
 		.permitAll()
 		.and()
-		.logout().permitAll()
-		;
+		.exceptionHandling().accessDeniedPage("/error_403");
 	}
 	
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Bean
-	public static BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public BCryptPasswordEncoder passwordEncoder() {
+		
+		return new BCryptPasswordEncoder(4);
 	}
+	
+	@Autowired
+	LoginUsuarioServiceIMP userDetailsService;
 	
 	@Autowired
 	public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception{
 		
-		PasswordEncoder encoder = passwordEncoder();
-		UserBuilder users = User.builder().passwordEncoder(encoder::encode);
-		
-		builder.inMemoryAuthentication()
-		.withUser(users.username("admin").password("12345").roles("ADMIN", "USER"))
-		.withUser(users.username("maxi").password("12345").roles("USER"));
-		
+		builder.userDetailsService(userDetailsService);
 	}
 		
 }
