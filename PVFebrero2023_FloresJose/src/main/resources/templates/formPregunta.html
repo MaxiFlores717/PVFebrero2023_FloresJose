@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+	<div class="container py-4">
+
+		<div class="card">
+			<div class="card-header" th:text=${titulo}></div>
+			<div class="card-body">
+				<h1 class="text-primary border border.success" th:text=${titulo}></h1>
+
+				<div th:object="${pregunta}">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger" >
+						<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+					</ul>
+				</div>
+
+			
+				<form th:action="@{/formPregunta}" th:object="${pregunta}" method="post">
+					<div class="form-group arow">
+
+						<label class="col-sm-2 col-form-label">CodPregunta</label>
+						<div class="col-sm-6">
+							<input type="number" th:field="*{codPregunta}" class="form-control" /> <small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('codPregunta')}" th:errors="*{codPregunta}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">enunciado</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{enunciado}" class="form-control" />
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('enunciado')}" th:errors="*{enunciado}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">nivel</label>
+						<div class="col-sm-6">
+							<input type="number" th:field="*{nivel}" class="form-control" />
+							<small class="form-text text-danger"
+								th:if="${#fields.hasErrors('nivel')}" th:errors="*{nivel}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">opcion01</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{opcion01}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('opcion01')}"
+								th:errors="*{opcion01}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">opcion02</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{opcion02}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('opcion02')}"
+								th:errors="*{opcion02}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">opcion03</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{opcion03}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('opcion03')}"
+								th:errors="*{opcion03}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">opcion04</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{opcion04}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('opcion04')}"
+								th:errors="*{opcion04}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">opcionCorrecta</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{opcionCorrecta}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('opcionCorrecta')}"
+								th:errors="*{opcionCorrecta}"></small>
+						</div>
+					</div>
+					<div class="form-group arow">
+						<label class="col-sm-2 col-form-label">puntaje</label>
+						<div class="col-sm-6">
+							<input type="text" th:field="*{puntaje}"
+								class="form-control" /> <small class="form-text text-danger"
+								th:if="${#fields.hasErrors('puntaje')}"
+								th:errors="*{puntaje}"></small>
+						</div>
+					</div>
+					<br> <br>
+					<div class="form-group arow">
+						<div class="col-sm-6">
+							<input type="submit" value="Crear Pregunta"
+								class="btn btn-outline-danger" />
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org">
+<head th:replace="layout/layout :: head">
+<title th:text="${titulo}"></title>
+</head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+
+	<div class="container py-4">
+
+		<div class="card">
+
+			<div class="card-header" th:text=${titulo}></div>
+			<div class="card-body ">
+				<ul>
+					<li><a class="btn btn-success"
+						th:href="@{/listarNivel/} + ${1}">Nivel 1</a></li>
+					<li><a class="btn btn-success"
+						th:href="@{/listarNivel/} + ${2}">Nivel 2</a></li>
+					<li><a class="btn btn-success"
+						th:href="@{/listarNivel/} + ${3}">Nivel 3</a></li>
+					<li><a class="btn btn-success"
+						th:href="@{/listarNivel/} + ${4}">Nivel 4</a></li>
+					<li><a class="btn btn-success"
+						th:href="@{/listarNivel/} + ${5}">Nivel 5</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+
+</html>

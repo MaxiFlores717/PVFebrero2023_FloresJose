@@ -21,28 +21,34 @@
 					<thead>
 						<!-- columnas -->
 						<tr>
-							<th>DNI</th>
-							<th>Nombre</th>
-							<th>Apellido</th>
-							<th>Fecha de Nacimiento</th>
-							<th>Tipo de usuario</th>
-							<th>Modificar</th>
-							<th>Eliminar</th>
+							<th>codPregunta</th>
+							<th>enunciado</th>
+							<th>nivel</th>
+							<th>opcion01</th>
+							<th>opcion02</th>
+							<th>opcion03</th>
+							<th>opcion04</th>
+							<th>opcionCorrecta</th>
+							<th>puntaje</th>
 						</tr>
 					</thead>
 					<tbody>
 						<!-- filas -->
-						<tr th:each="usuario: ${usuarios}">
-							<td th:text="${usuario.DNI}"></td>
-							<td th:text="${usuario.nombre}"></td>
-							<td th:text="${usuario.apellido}"></td>
-							<td th:text="${usuario.FechaDeNacimiento}"></td>
-							<td th:text="${usuario.tipoUsuario}"></td>
+						<tr th:each="pregunta: ${preguntas}">
+							<td th:text="${pregunta.codPregunta}"></td>
+							<td th:text="${pregunta.enunciado}"></td>
+							<td th:text="${pregunta.nivel}"></td>
+							<td th:text="${pregunta.opcion01}"></td>
+							<td th:text="${pregunta.opcion02}"></td>
+							<td th:text="${pregunta.opcion03}"></td>
+							<td th:text="${pregunta.opcion04}"></td>
+							<td th:text="${pregunta.opcionCorrecta}"></td>
+							<td th:text="${pregunta.puntaje}"></td>
 							<td><a class="btn btn-success"
-								th:href="@{/form/} + ${usuario.DNI}">Modificar</a></td>
+								th:href="@{/formPregunta/} + ${pregunta.codPregunta}">Modificar</a></td>
 							<td><a class="btn btn-danger"
-								th:href="@{/eliminar/} + ${usuario.DNI}"
-								onclick="return confirm('Estás seguro que quieres eliminar este usuario?');">Eliminar</a></td>
+								th:href="@{/eliminarPregunta/} + ${pregunta.codPregunta}"
+								onclick="return confirm('Estás seguro que quieres eliminar esta pregunta?');">Eliminar</a></td>
 						</tr>
 					</tbody>
 				</table>
