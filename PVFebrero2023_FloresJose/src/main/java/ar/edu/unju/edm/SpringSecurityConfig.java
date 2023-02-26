@@ -20,16 +20,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	private LoginSuccesHandler successHandler;
 	
 	
-//	fijarse para q ande el boton desplegable
-//	String[] resources = new String[] { "/include/**", "/css/**", "/icons/**", "/img/**", "/js/**", "/layer/**",
-//	"/webjars/**" };
-//	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/", "/listar", "/images/**", "/css/**", "/js/**", "/form/**").permitAll()
-		.antMatchers("/eliminar/**").hasAnyRole("DOCENTE")
-//		.antMatchers("/form/**").hasAnyRole("ADMIN")
+		http.authorizeRequests().antMatchers("/paginaInicio/**", "/","/img/**", "/css/**", "/js/**", "/form/**").permitAll()
+		.antMatchers("/eliminar/**").hasAnyAuthority("DOCENTE")
+		.antMatchers("/listar/**").hasAnyAuthority("DOCENTE")
+		.antMatchers("/formPregunta/**").hasAnyAuthority("DOCENTE")
+		.antMatchers("/listarPregunta/**").hasAnyAuthority("DOCENTE")
+		.antMatchers("/indexEstudiante/**").hasAnyAuthority("ESTUDIANTE")
+		.antMatchers("/indexNivel/**").hasAnyAuthority("ESTUDIANTE")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()

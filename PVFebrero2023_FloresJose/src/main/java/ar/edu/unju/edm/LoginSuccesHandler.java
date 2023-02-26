@@ -46,7 +46,7 @@ public class LoginSuccesHandler extends SimpleUrlAuthenticationSuccessHandler{
 			redirectStrategy.sendRedirect(request, response, "/listar");
 		}
 		if(tipoEstudiante==true) {
-			redirectStrategy.sendRedirect(request, response, "/listarNivel");
+			redirectStrategy.sendRedirect(request, response, "/indexEstudiante");
 		}
 		
 		

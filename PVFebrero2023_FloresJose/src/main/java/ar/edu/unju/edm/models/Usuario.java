@@ -42,7 +42,6 @@ public class Usuario implements Serializable {
 	@NotEmpty
 	private String tipoUsuario;
 	
-	private List<Pregunta> preguntas;
 
 	public Long getDNI() {
 		return DNI;
@@ -94,18 +93,6 @@ public class Usuario implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	public List<Pregunta> getPreguntas() {
-		return preguntas;
-	}
-
-	public void setPreguntas(List<Pregunta> preguntas) {
-		this.preguntas = preguntas;
-	}
-
-	public void addPregunta(Pregunta pregunta) {
-		this.preguntas.add(pregunta);
 	}
 
 }

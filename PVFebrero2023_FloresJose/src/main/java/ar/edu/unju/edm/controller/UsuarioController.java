@@ -32,8 +32,13 @@ public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@RequestMapping(value = {"/paginaInicio", "/"})
+	public String Inicio() {
+		return "paginaInicio";
+	}
 
-	@RequestMapping(value = { "/listar", "/" }, method = RequestMethod.GET)
+	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(Model model, Authentication authentication) {
 		
 		if(authentication != null) {
@@ -72,7 +77,7 @@ public class UsuarioController {
 		} else {
 			usuarioService.save(usuario);
 			flash.addFlashAttribute("success", "Usuario creado con exito!");
-			return "redirect:listar";
+			return "redirect:/";
 		}
 	}
 

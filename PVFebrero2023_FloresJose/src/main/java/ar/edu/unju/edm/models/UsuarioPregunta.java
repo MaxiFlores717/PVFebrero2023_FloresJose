@@ -24,14 +24,6 @@ public class UsuarioPregunta implements Serializable{
 	@Id
 	private Long codUsuarioPregunta;
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="dni")
-	private Usuario usuario;
-	
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="codPregunta")
-	private Pregunta pregunta;
-	
 	private int PuntajeObtenido;
 
 	public Long getCodUsuarioPregunta() {
@@ -42,21 +34,7 @@ public class UsuarioPregunta implements Serializable{
 		this.codUsuarioPregunta = codUsuarioPregunta;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Pregunta getPregunta() {
-		return pregunta;
-	}
-
-	public void setPregunta(Pregunta pregunta) {
-		this.pregunta = pregunta;
-	}
 
 	public int getPuntajeObtenido() {
 		return PuntajeObtenido;
@@ -70,11 +48,9 @@ public class UsuarioPregunta implements Serializable{
 		return serialVersionUID;
 	}
 
-	public UsuarioPregunta(Long codUsuarioPregunta, Usuario usuario, Pregunta pregunta, int puntajeObtenido) {
+	public UsuarioPregunta(Long codUsuarioPregunta, int puntajeObtenido) {
 		super();
 		this.codUsuarioPregunta = codUsuarioPregunta;
-		this.usuario = usuario;
-		this.pregunta = pregunta;
 		PuntajeObtenido = puntajeObtenido;
 	}
 
